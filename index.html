@@ -1,1 +1,159 @@
 # safsofhubi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I'm sorry</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,800&family=Sora:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdeef6;--ink:#2b1846;--soft:#6b5a8a;--glow:#ff4f9a;--btn:#ff4f9a;--btnink:#fff;--b1:#ffb3d9;--b2:#b9c6ff;--b3:#ffd9a8;--card:rgba(255,255,255,.55);--edge:rgba(255,255,255,.8);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0620;--ink:#f6eeff;--soft:#b9a7e0;--glow:#ff7ac6;--btn:#ff5fae;--btnink:#fff;--b1:#7b2ff7;--b2:#ff3d9a;--b3:#00c2ff;--card:rgba(255,255,255,.07);--edge:rgba(255,255,255,.18)}}
+:root[data-theme="dark"]{--bg:#0a0620;--ink:#f6eeff;--soft:#b9a7e0;--glow:#ff7ac6;--btn:#ff5fae;--btnink:#fff;--b1:#7b2ff7;--b2:#ff3d9a;--b3:#00c2ff;--card:rgba(255,255,255,.07);--edge:rgba(255,255,255,.18)}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Sora,system-ui,sans-serif;font-weight:300;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+main{position:relative;max-width:34rem;padding:2rem 1.5rem;min-height:14rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+h1{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:800;font-size:clamp(3rem,12vw,5.5rem);margin:0;line-height:1}
+p{font-size:clamp(1.15rem,4.4vw,1.5rem);line-height:1.6;margin:0}
+.line{opacity:0;filter:blur(8px);transform:translateY(10px);transition:opacity 1.6s ease,filter 1.6s ease,transform 1.6s ease}
+.line.on{opacity:1;filter:none;transform:none}
+.line.out{opacity:0;filter:blur(6px);transform:translateY(-10px);transition-duration:.8s}
+.tulip{position:fixed;bottom:0;height:clamp(110px,22vh,190px);pointer-events:none;z-index:0;transform-origin:50% 100%;animation:sway 4s ease-in-out infinite alternate}
+.tulip svg{height:100%;width:auto;overflow:visible;display:block}
+.stem{transform-origin:30px 160px;animation:grow 1.8s cubic-bezier(.2,.8,.3,1) both}
+.bloom{transform-box:view-box;transform-origin:30px 62px;transform:scale(0);animation:open 1.3s 1.3s cubic-bezier(.3,1.5,.5,1) forwards}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes open{to{transform:scale(1)}}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+main{z-index:1;width:min(34rem,calc(100% - 3rem));box-sizing:border-box;padding:2.5rem 1.75rem;background:var(--card);border:1px solid var(--edge);border-radius:2rem;-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);box-shadow:0 20px 60px rgba(120,40,160,.25),inset 0 1px 0 var(--edge)}
+h1{background:linear-gradient(100deg,var(--ink) 20%,var(--glow) 90%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:.1em .15em}
+p{line-height:1.75}
+.aurora{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.aurora i{position:absolute;width:60vmax;height:60vmax;border-radius:50%;filter:blur(80px);opacity:.6;animation:drift 20s ease-in-out infinite alternate}
+.aurora i:nth-child(1){background:var(--b1);top:-25vmax;left:-20vmax}
+.aurora i:nth-child(2){background:var(--b2);bottom:-30vmax;right:-20vmax;animation-delay:-7s}
+.aurora i:nth-child(3){background:var(--b3);top:20vh;left:35vw;width:40vmax;height:40vmax;opacity:.4;animation-delay:-13s}
+@keyframes drift{to{transform:translate(10vw,-8vh) scale(1.2)}}
+@media (prefers-reduced-motion:reduce){.aurora i{animation:none}}
+.tulip svg{filter:drop-shadow(0 0 10px var(--glow))}
+@media (prefers-reduced-motion:reduce){.tulip{animation:none}.stem{animation:none}.bloom{animation:none;transform:scale(1)}}
+.hint{position:fixed;top:calc(1.5rem + env(safe-area-inset-top,0px));left:0;right:0;font-size:.95rem;color:var(--soft);font-style:italic;animation:pulse 2.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.row{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
+button{font:inherit;font-size:1.1rem;padding:.8rem 1.5rem;border-radius:2rem;border:1.5px solid var(--btn);background:transparent;color:var(--ink);cursor:pointer;transition:transform .2s}
+button.yes{background:var(--btn);color:var(--btnink)}
+button:hover{transform:scale(1.05)}button:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+.heart{position:fixed;pointer-events:none;font-size:1.6rem;animation:rise 3.2s ease-out forwards}
+@keyframes rise{to{transform:translateY(-70vh) rotate(var(--r));opacity:0}}
+@media (prefers-reduced-motion:reduce){.line{transition-duration:.01s;filter:none;transform:none}.hint{animation:none}}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<canvas id="c" aria-hidden="true"></canvas>
+<main id="stage" aria-live="polite"></main>
+<div class="hint" id="hint">tap anywhere to continue</div>
+<script>
+// ✏️ EDIT THESE: her name and your words
+var NAME = "صفصوف حبي كل مااملك ماقصدتش والله";
+var STEPS = [
+  {h: "Hey, " + NAME + "."},
+  {p: "I need to tell you something, and I want to say it properly."},
+  {p: "I said hurtful things while I was angry. They were unfair, and they came from me, not from anything you did."},
+  {p: "I can't take those words back. I know they hurt you, and that hurts me more than I can say."},
+  {p: "You deserve to be spoken to with kindness, even when I'm upset. Especially then."},
+  {p: "I'm sorry. Truly. I'm going to work on how I handle my anger, so it never lands on you again."},
+  {p: "You matter more to me than being right."},
+  {ask: true}
+];
+var stage = document.getElementById('stage'), hint = document.getElementById('hint'), i = 0, busy = false;
+
+function show(step){
+  var el = document.createElement('div'); el.className = 'line';
+  if (step.h) el.innerHTML = '<h1></h1>', el.firstChild.textContent = step.h;
+  else if (step.p) el.innerHTML = '<p></p>', el.firstChild.textContent = step.p;
+  else {
+    hint.style.display = 'none';
+    el.innerHTML = '<h1>Can you forgive me?</h1><div class="row"><button class="yes" id="y">Yes</button><button id="n">I need some time</button></div>';
+  }
+  stage.appendChild(el);
+  requestAnimationFrame(function(){requestAnimationFrame(function(){el.classList.add('on')})});
+  if (step.ask){
+    document.getElementById('y').onclick = function(e){e.stopPropagation();finish(el,true)};
+    document.getElementById('n').onclick = function(e){e.stopPropagation();finish(el,false)};
+  }
+}
+var COLORS = [['#ff5c8a','#e03a6b'],['#ff4d5e','#d62f45'],['#ffd166','#f0b429'],['#c77dff','#a25ce0'],['#ff8fab','#f06a8d']];
+var tulipCount = 0;
+function plant(n){
+  for (var k = 0; k < n; k++){
+    var c = COLORS[tulipCount % COLORS.length], slot = tulipCount++;
+    var t = document.createElement('div'); t.className = 'tulip';
+    t.style.left = (4 + ((slot * 37) % 88)) + '%';
+    t.style.height = 'clamp(' + (90 + (slot % 3) * 20) + 'px,' + (18 + (slot % 3) * 4) + 'vh,' + (150 + (slot % 3) * 30) + 'px)';
+    t.style.animationDelay = (-slot * .7) + 's';
+    t.innerHTML = '<svg viewBox="0 0 60 160" aria-hidden="true">' +
+      '<g class="stem"><path d="M30 160 C30 120 31 95 30 64" stroke="#4f9a5b" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
+      '<path d="M30 150 C14 138 10 118 14 100 C26 112 30 132 30 150Z" fill="#5fb06b"/>' +
+      '<path d="M30 140 C46 130 50 112 46 96 C34 106 30 122 30 140Z" fill="#4f9a5b"/></g>' +
+      '<g class="bloom"><path d="M30 64 C14 62 9 40 18 26 C25 34 29 46 30 64Z" fill="' + c[1] + '"/>' +
+      '<path d="M30 64 C46 62 51 40 42 26 C35 34 31 46 30 64Z" fill="' + c[1] + '"/>' +
+      '<path d="M30 64 C18 60 16 38 30 20 C44 38 42 60 30 64Z" fill="' + c[0] + '"/></g></svg>';
+    t.querySelector('.stem').style.animationDelay = (k * .25) + 's';
+    t.querySelector('.bloom').style.animationDelay = (1.3 + k * .25) + 's';
+    document.body.appendChild(t);
+  }
+}
+function next(){
+  if (busy || i >= STEPS.length) return; busy = true;
+  plant(i === STEPS.length - 1 ? 3 : 1);
+  var old = stage.firstChild;
+  if (old){ old.classList.add('out'); setTimeout(function(){ old.remove(); show(STEPS[i++]); busy = false; }, 800); }
+  else { show(STEPS[i++]); busy = false; }
+}
+function finish(el, yes){
+  el.classList.add('out');
+  setTimeout(function(){
+    el.remove();
+    var d = document.createElement('div'); d.className = 'line';
+    d.innerHTML = yes ? '<h1>Thank you.</h1><p style="margin-top:1rem">I love you. I\'ll show you, not just say it.</p>'
+                      : '<h1>That\'s okay.</h1><p style="margin-top:1rem">Take all the time you need. I\'ll be here, and I\'ll be waiting.</p>';
+    stage.appendChild(d); requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('on')})});
+    if (yes) burst();
+  }, 800);
+}
+function burst(){
+  for (var k = 0; k < 40; k++) setTimeout(function(){
+    var h = document.createElement('div'); h.className = 'heart';
+    h.textContent = ['🌷','💗','🌷','💖','✨'][Math.floor(Math.random()*4)];
+    h.style.left = Math.random()*100 + 'vw'; h.style.bottom = '-2rem';
+    h.style.setProperty('--r', (Math.random()*60-30) + 'deg');
+    document.body.appendChild(h); setTimeout(function(){h.remove()}, 3300);
+  }, k*90);
+}
+document.addEventListener('click', next);
+document.addEventListener('keydown', function(e){ if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') next(); });
+
+// Drifting fireflies
+var cv = document.getElementById('c'), cx = cv.getContext('2d'), F = [], W, H;
+function size(){ W = cv.width = innerWidth; H = cv.height = innerHeight; }
+size(); addEventListener('resize', size);
+for (var k = 0; k < 45; k++) F.push({x:Math.random(),y:Math.random(),r:Math.random()*2.2+.8,s:Math.random()*.0004+.0001,p:Math.random()*6.28});
+var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+function draw(t){
+  cx.clearRect(0,0,W,H);
+  var col = getComputedStyle(document.documentElement).getPropertyValue('--glow').trim();
+  F.forEach(function(f){
+    f.y -= f.s; f.x += Math.sin(t/2000 + f.p)*.0002; if (f.y < -.02) f.y = 1.02;
+    var a = .35 + .35*Math.sin(t/700 + f.p);
+    cx.globalAlpha = a; cx.fillStyle = col; cx.shadowColor = col; cx.shadowBlur = 14;
+    cx.beginPath(); cx.arc(f.x*W, f.y*H, f.r, 0, 6.28); cx.fill();
+  });
+  if (!reduce) requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+next();
+</script>
+</body>
+</html>
